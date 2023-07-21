@@ -7,7 +7,6 @@ import study.datajpa.entity.Member;
 
 import java.util.List;
 import java.util.Optional;
-
 @Repository
 public class MemberJpaRepository {
     @PersistenceContext
@@ -33,5 +32,13 @@ public class MemberJpaRepository {
     }
     public Member find(Long id) {
         return em.find(Member.class, id);
+    }
+
+    public List<Member> findByUsername(String username) {   // named query 사용법
+        List<Member> resultList =
+                em.createNamedQuery("Member.findByUsername", Member.class)
+                        .setParameter("username", username)
+                        .getResultList();
+        return resultList;
     }
 }
